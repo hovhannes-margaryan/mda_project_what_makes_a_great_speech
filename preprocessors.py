@@ -77,16 +77,31 @@ class RemoveExtras(BasicPreprocess):
     def __call__(self, text: str) -> str:
         result = text.strip()
         result = result.replace("AAm\nmeerriiccaannRRhheettoorriicc..ccoom\nm", "").replace(
-            "Property of AmericanRhetoric.com", "")
+            "Property of AmericanRhetoric.com", "").replace(
+            "Property of  AmericanRhetoric.com", "")
 
-        result = re.sub("Transcription by [a-zA-Z]+ [a-zA-Z]\. [a-zA-Z]+\.", "", result)
+        result = result.replace("AmericanRhetoric.com", "")
+        result = re.sub("Copyright Status: ([a-zA-Z]+( [a-zA-Z]+)+)\.", "", result)
+        result = re.sub("©Copyright\s[0-9]+\. ([a-zA-Z]+( [a-zA-Z]+)+)\.", "", result)
+        result = re.sub("Copyright Status: [a-zA-Z]+, [a-zA-Z]+ [a-zA-Z]+\.", "", result)
+        result = re.sub("Copyright Status = [a-zA-Z]+\s[a-zA-Z]+", "", result)
+        result = re.sub("Copyright Status = [a-zA-Z]+", "", result)
+        result = re.sub("Copyright Status: [a-zA-Z]+", "", result)
+
+        result = re.sub("[a-zA-Z]+ by [a-zA-Z]+ [a-zA-Z]\. [a-zA-Z]+\.", "", result)
+        result = re.sub("[a-zA-Z]+ by [a-zA-Z]+ [a-zA-Z]\. [a-zA-Z]+", "", result)
+        result = re.sub("[a-zA-Z]+ by [a-zA-Z]+ [a-zA-Z]+\.", "", result)
+
+        result = re.sub("[a-zA-Z]+ by [a-zA-Z]+ [a-zA-Z]+ [a-zA-Z]+ [a-zA-Z]+ [a-zA-Z]+\.", "", result)
+        result = re.sub("[a-zA-Z]+ by [a-zA-Z]+ [a-zA-Z]+", "", result)
         result = re.sub("Page [0-9]", "", result)
         result = re.sub("Updated [0-9]+/[0-9]+/[0-9]+", "", result)
+        result = re.sub("Created [0-9]+/[0-9]+/[0-9]+", "", result)
         result = re.sub("AUTHENTICITY CERTIFIED: ([a-zA-Z]+( [a-zA-Z]+)+)", "", result)
         result = result.strip()
 
         if len(self.params.keys()) != 0:
             if self.params["names"]:
                 return "\n".join(str(item) for item in result.split("\n")[3:])
-        else:
-            return result
+            else:
+                return result
