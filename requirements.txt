@@ -1,6 +1,8 @@
 asttokens==2.0.5
 backcall==0.2.0
+beautifulsoup4==4.11.1
 blis==0.7.7
+bs4==0.0.1
 catalogue==2.0.7
 certifi==2021.10.8
 charset-normalizer==2.0.12
@@ -59,6 +61,7 @@ scikit-learn==1.0.2
 scipy==1.8.0
 six==1.16.0
 smart-open==5.2.1
+soupsieve==2.3.2.post1
 spacy==3.3.0
 spacy-alignments==0.8.5
 spacy-legacy==3.0.9
