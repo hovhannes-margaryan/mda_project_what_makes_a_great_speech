@@ -4,6 +4,11 @@ import re
 
 class BasicPreprocess:
     def __init__(self, model: str = "en_core_web_md", **params):
+        """
+
+        :param model: model name from spacy
+        :param params:
+        """
         self.params = params
         self.nlp = spacy.load(model)
 
@@ -13,6 +18,11 @@ class BasicPreprocess:
 
 class AdvancedPreprocess:
     def __init__(self, model: str = "en_core_web_md", **params):
+        """
+
+        :param model: model name from spacy
+        :param params:
+        """
         self.params = params
         self.nlp = spacy.load(model)
 
