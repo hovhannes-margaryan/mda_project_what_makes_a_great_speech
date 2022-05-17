@@ -1,7 +1,6 @@
 import os
 import glob
 import fitz
-from DataLoader import DataLoader
 
 
 class Dataset:
