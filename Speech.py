@@ -1,6 +1,7 @@
 from transformers import pipeline
-from preprocessors import Sentensize, RemoveStopwords
+from preprocessors import Sentensize, RemoveStopwords, Lower
 import spacy
+import numpy as np
 
 
 class Speech:
@@ -46,13 +47,13 @@ class Speech:
         else:
             return summary
 
-    def get_entities(self, model: str = "en_core_web_md", labels: bool = False):
+    def get_entities(self, model: str = "en_core_web_md", labels: bool = False) -> list:
         nlp = spacy.load(model)
-        doc = nlp(RemoveStopwords()(self.content))
+        doc = nlp(RemoveStopwords()(Lower()(self.content)))
 
         if labels:
-            entities = [(ent.text, ent.label_) for ent in doc.ents]
+            entities = [(entity[0].title(), entity[1]) for entity in list(dict.fromkeys([(ent.text, ent.label_) for ent in doc.ents]))]
         else:
-            entities = [ent.text for ent in doc.ents]
+            entities = [entity.title() for entity in np.unique([ent.text for ent in doc.ents]).tolist()]
 
         return entities
