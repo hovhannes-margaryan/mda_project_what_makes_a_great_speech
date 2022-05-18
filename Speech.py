@@ -1,5 +1,6 @@
 from transformers import pipeline
-from preprocessors import Sentensize
+from preprocessors import Sentensize, RemoveStopwords
+import spacy
 
 
 class Speech:
@@ -44,3 +45,14 @@ class Speech:
             return self.content
         else:
             return summary
+
+    def get_entities(self, model: str = "en_core_web_md", labels: bool = False):
+        nlp = spacy.load(model)
+        doc = nlp(RemoveStopwords()(self.content))
+
+        if labels:
+            entities = [(ent.text, ent.label_) for ent in doc.ents]
+        else:
+            entities = [ent.text for ent in doc.ents]
+
+        return entities
