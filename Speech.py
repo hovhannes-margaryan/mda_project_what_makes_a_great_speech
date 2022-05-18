@@ -48,6 +48,12 @@ class Speech:
             return summary
 
     def get_entities(self, model: str = "en_core_web_md", labels: bool = False) -> list:
+        """
+
+        :param model:  model name from spacy
+        :param labels: if true also returns the labels of entities
+        :return:
+        """
         nlp = spacy.load(model)
         doc = nlp(RemoveStopwords()(Lower()(self.content)))
 
