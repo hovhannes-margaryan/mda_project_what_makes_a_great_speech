@@ -35,7 +35,7 @@ class RemoveStopwords(BasicPreprocess):
         super(RemoveStopwords, self).__init__(model, **params)
 
     def __call__(self, text: str, **params) -> str:
-        return " ".join(str(item) for item in [token for token in self.nlp(text) if not token.is_stop])
+        return " ".join(str(item) for item in [token for token in self.nlp(text) if not token.is_stop]).strip()
 
 
 class Lemmatize(BasicPreprocess):
@@ -51,7 +51,7 @@ class RemovePunctuation(BasicPreprocess):
         super(RemovePunctuation, self).__init__(model, **params)
 
     def __call__(self, text: str, **params) -> str:
-        return " ".join(str(item) for item in [token for token in self.nlp(text) if not token.is_punct])
+        return " ".join(str(item) for item in [token for token in self.nlp(text) if not token.is_punct]).strip()
 
 
 class Lower(BasicPreprocess):
@@ -88,10 +88,11 @@ class RemoveExtras(BasicPreprocess):
         result = re.sub("Copyright Status = [a-zA-Z]+", "", result)
         result = re.sub("Copyright Status: [a-zA-Z]+", "", result)
 
+
+        result = re.sub("[a-zA-Z]+ by [a-zA-Z]+ [a-zA-Z]\. [a-zA-Z]+ [a-zA-Z]+", "", result)
         result = re.sub("[a-zA-Z]+ by [a-zA-Z]+ [a-zA-Z]\. [a-zA-Z]+\.", "", result)
         result = re.sub("[a-zA-Z]+ by [a-zA-Z]+ [a-zA-Z]\. [a-zA-Z]+", "", result)
         result = re.sub("[a-zA-Z]+ by [a-zA-Z]+ [a-zA-Z]+\.", "", result)
-
         result = re.sub("[a-zA-Z]+ by [a-zA-Z]+ [a-zA-Z]+ [a-zA-Z]+ [a-zA-Z]+ [a-zA-Z]+\.", "", result)
         result = re.sub("[a-zA-Z]+ by [a-zA-Z]+ [a-zA-Z]+", "", result)
         result = re.sub("Page [0-9]", "", result)

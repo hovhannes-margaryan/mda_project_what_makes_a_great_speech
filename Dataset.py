@@ -8,10 +8,10 @@ class Dataset:
         self.paths = glob.glob(os.path.join(path, "*"))
         self.preprocessors = preprocessors
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.paths)
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int) -> str:
         with fitz.open(self.paths[index]) as doc:
             data = ""
             for page in doc:

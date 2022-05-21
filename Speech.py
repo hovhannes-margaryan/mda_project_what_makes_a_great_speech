@@ -2,6 +2,7 @@ from transformers import pipeline
 from preprocessors import Sentensize, RemoveStopwords, Lower
 import spacy
 import numpy as np
+import re
 
 
 class Speech:
@@ -63,3 +64,26 @@ class Speech:
             entities = [entity.title() for entity in np.unique([ent.text for ent in doc.ents]).tolist()]
 
         return entities
+
+    def extract_speaker(self) -> str:
+        """
+        assumes content contains the speaker name and follows the pattern of pdf of speeches
+        :return:
+        """
+        return self.content.split("\n")[0].strip()
+
+    def extract_title(self) -> str:
+        """
+        assumes content contains the title and follows the pattern of pdf of speeches
+        :return:
+        """
+        return self.content.split("\n")[1].strip()
+
+    def extract_year(self) -> str:
+        """
+        assumes content contains the year and follows the pattern of pdf of speeches
+        :return:
+        """
+        return re.search("[0-9][0-9][0-9][0-9]", self.content.split("\n")[2]).group(0)
+
+

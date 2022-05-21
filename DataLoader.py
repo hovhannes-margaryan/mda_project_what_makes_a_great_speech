@@ -1,5 +1,8 @@
+from Dataset import Dataset
+
+
 class DataLoader:
-    def __init__(self, dataset):
+    def __init__(self, dataset: Dataset):
         self.dataset = dataset
         self._index = 0
 
