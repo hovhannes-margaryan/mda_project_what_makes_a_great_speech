@@ -86,4 +86,15 @@ class Speech:
         """
         return re.search("[0-9][0-9][0-9][0-9]", self.content.split("\n")[2]).group(0)
 
+    def get_length(self, model: str = "en_core_web_md") -> int:
+        """
+        :param model: model name from spacy
+        :return:
+        """
+
+        nlp = spacy.load(model)
+        tokens = [token for token in nlp(self.content)]
+
+        return len(tokens)
+
 
