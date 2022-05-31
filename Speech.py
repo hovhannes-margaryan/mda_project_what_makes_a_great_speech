@@ -118,3 +118,7 @@ class Speech:
             return count
         else:
             return count / len(tokens_text)
+
+    def get_mean_sentence_length(self):
+        sentence_lengths = [len(sen) for sen in Sentensize()(self.content)]
+        return np.mean(np.array(sentence_lengths))
