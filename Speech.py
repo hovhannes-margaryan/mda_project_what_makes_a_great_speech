@@ -59,7 +59,8 @@ class Speech:
         doc = nlp(RemoveStopwords()(Lower()(self.content)))
 
         if labels:
-            entities = [(entity[0].title(), entity[1]) for entity in list(dict.fromkeys([(ent.text, ent.label_) for ent in doc.ents]))]
+            entities = [(entity[0].title(), entity[1]) for entity in
+                        list(dict.fromkeys([(ent.text, ent.label_) for ent in doc.ents]))]
         else:
             entities = [entity.title() for entity in np.unique([ent.text for ent in doc.ents]).tolist()]
 
@@ -97,4 +98,23 @@ class Speech:
 
         return len(tokens)
 
+    def get_proportion_in_speech(self, list_of_words: list, model: str = "en_core_web_md", absolute=False) -> float:
+        """
+        :param list_of_words: list of words to check if speech contains one
+        :param model: model name from spacy to be used for tokenization of speech content
+        :param absolute: if true retains an absolute count else proportion
+        :return:
+        """
+        count = 0
+        nlp = spacy.load(model)
+        tokens_text = [token.text for token in nlp(self.content)]
+        list_of_words = [word.strip().lower() for word in list_of_words]
 
+        for word in list_of_words:
+            if word in tokens_text:
+                count += 1
+
+        if absolute:
+            return count
+        else:
+            return count / len(tokens_text)
