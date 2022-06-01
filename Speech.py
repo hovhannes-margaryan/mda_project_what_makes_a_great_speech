@@ -5,6 +5,7 @@ import numpy as np
 import re
 from textblob import TextBlob
 from collections import Counter
+import textdescriptives as td
 
 
 class Speech:
@@ -148,7 +149,6 @@ class Speech:
         requires self.content to be preprocessed
                 RemoveExtras(names=False),
                 RemoveStopwords(),
-                RemovePunctuation(),
         :param model: model name from spacy
         :return: Flesch reading ease
                 90-100	very easy to read, easily understood by an average 11-year-old student
@@ -160,7 +160,7 @@ class Speech:
                 0-30	very difficult to read, best understood by university graduates
         """
         nlp = spacy.load(model)
-        nlp.add_pipe("textdescriptives")
+        nlp.add_pipe('textdescriptives')
         doc = nlp(self.content)
 
         return doc._.readability["flesch_reading_ease"]
@@ -170,7 +170,6 @@ class Speech:
         requires self.content to be preprocessed
                 RemoveExtras(names=False),
                 RemoveStopwords(),
-                RemovePunctuation(),
         :param model: model name from spacy
         :return: Hapax richness
         """

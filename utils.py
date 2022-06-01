@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 def scrape_speeches(base_url: str, dataset_dir: str, usr_agent):
     """
-
+    currently it supports scraping important speeches only
     :param base_url:
     :param dataset_dir:
     :param usr_agent: use navigator.userAgent in the console to get the usr_agent
