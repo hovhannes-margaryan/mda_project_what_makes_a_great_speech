@@ -4,6 +4,7 @@ import spacy
 import numpy as np
 import re
 from textblob import TextBlob
+from collections import Counter
 
 
 class Speech:
@@ -140,5 +141,44 @@ class Speech:
         :return: output range: [-1, 1]
         """
         return TextBlob(self.content).sentiment.polarity
+
+    def get_complexity(self, model: str = "en_core_web_md") -> float:
+        """
+        uses textdescriptives
+        requires self.content to be preprocessed
+                RemoveExtras(names=False),
+                RemoveStopwords(),
+                RemovePunctuation(),
+        :param model: model name from spacy
+        :return: Flesch reading ease
+                90-100	very easy to read, easily understood by an average 11-year-old student
+                80-90	easy to read
+                70-80	fairly easy to read
+                60-70	easily understood by 13- to 15-year-old students
+                50-60	fairly difficult to read
+                30-50	difficult to read, best understood by college graduates
+                0-30	very difficult to read, best understood by university graduates
+        """
+        nlp = spacy.load(model)
+        nlp.add_pipe("textdescriptives")
+        doc = nlp(self.content)
+
+        return doc._.readability["flesch_reading_ease"]
+
+    def get_lexical_richness(self, model: str = "en_core_web_md") -> float:
+        """
+        requires self.content to be preprocessed
+                RemoveExtras(names=False),
+                RemoveStopwords(),
+                RemovePunctuation(),
+        :param model: model name from spacy
+        :return: Hapax richness
+        """
+        nlp = spacy.load(model)
+        tokens_text = [token.text.strip().lower() for token in nlp(self.content)]
+        counter = Counter(tokens_text)
+        return sum(np.array(list(counter.values())) == 1) / len(tokens_text)
+
+
 
 

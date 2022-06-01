@@ -16,6 +16,7 @@ entrypoints==0.4
 executing==0.8.3
 filelock==3.7.0
 fonttools==4.33.3
+ftfy==6.0.3
 huggingface-hub==0.6.0
 idna==3.3
 ipykernel==6.13.0
@@ -51,6 +52,7 @@ Pygments==2.12.0
 PyMuPDF==1.19.6
 pyparsing==3.0.8
 PyPDF2==1.27.12
+pyphen==0.11.0
 python-dateutil==2.8.2
 pytz==2022.1
 PyYAML==6.0
@@ -71,6 +73,7 @@ spacy-transformers==1.1.5
 srsly==2.4.3
 stack-data==0.2.0
 textblob==0.17.1
+textdescriptives==1.0.7
 thinc==8.0.15
 threadpoolctl==3.1.0
 tokenizers==0.12.1
