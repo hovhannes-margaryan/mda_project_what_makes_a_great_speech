@@ -3,6 +3,7 @@ from preprocessors import Sentensize, RemoveStopwords, Lower
 import spacy
 import numpy as np
 import re
+from textblob import TextBlob
 
 
 class Speech:
@@ -122,3 +123,22 @@ class Speech:
     def get_mean_sentence_length(self):
         sentence_lengths = [len(sen) for sen in Sentensize()(self.content)]
         return np.mean(np.array(sentence_lengths))
+
+    def get_subjectivity(self) -> float:
+        """
+        uses TextBlob
+        requires self.content to be preprocessed
+        :return: output range: [0-1] - higher value means higher subjectivity
+        """
+
+        return TextBlob(self.content).sentiment.subjectivity
+
+    def get_polarity(self) -> float:
+        """
+        uses TextBlob
+        requires self.content to be preprocessed
+        :return: output range: [-1, 1]
+        """
+        return TextBlob(self.content).sentiment.polarity
+
+
