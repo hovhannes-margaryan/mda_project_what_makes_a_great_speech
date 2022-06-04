@@ -1,8 +1,8 @@
-from Dataset import Dataset
+from Dataset import SpeechDataset
 
 
 class DataLoader:
-    def __init__(self, dataset: Dataset):
+    def __init__(self, dataset: SpeechDataset):
         self.dataset = dataset
         self._index = 0
 
