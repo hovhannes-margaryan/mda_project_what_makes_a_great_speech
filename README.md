@@ -1,4 +1,4 @@
-# MDA project - what makes a great speech?
+# MDA project: what makes a great speech?
 
 This project addresses the following question: what makes a great speech?
 The following metrics are defined and hypothesised to influence the quality and importance of a speech: emotions, sentiment,
