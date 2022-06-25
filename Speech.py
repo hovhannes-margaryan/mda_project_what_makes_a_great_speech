@@ -237,11 +237,11 @@ class Speech:
         :param preprocessors: a list of preprocessors to be applied to content
         :return: preprocessed speech
         """
-        preprocessed = ""
+        preprocessed = self.content
         if preprocessors is None or len(preprocessors) == 0:
             raise Exception("preprocessors should not be none or empty!")
 
         for preprocessor in preprocessors:
-            preprocessed = preprocessor(self.content)
+            preprocessed = preprocessor(preprocessed)
 
         return preprocessed
