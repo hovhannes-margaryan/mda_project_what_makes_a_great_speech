@@ -15,12 +15,12 @@ The project includes the following classes: DataLoader, BasicDataset,
 SpeechDataset, Speech, preprocessors and 
 Analysis of Speech notebook that conducts the analysis 
 making use of the classes and their functionality. Dataloader is an iterable 
-over the SpeechDataset. SpeechDataset is design to read the speeches from pdf 
+over the SpeechDataset. SpeechDataset is designed to read the speeches from pdf 
 format and return a Speech. The Speech class has all
 the methods to compute and extract all the measures defined above. 
-Preprocessors are can be used either for the BasicDataset to 
+Preprocessors can be used either for the BasicDataset to 
 directly preprocess the data or they can be used in the 
-methods of Speech for customization in case of non-default 
+methods of Speech for customization in case non-default 
 models are used as arguments. The functionalities
 are implemented in a general way and thus
 can be used for further analysis of
