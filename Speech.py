@@ -60,6 +60,44 @@ class Speech:
 
         return emotion_scores
 
+    def get_emotion_scores_average(self, model: str = "j-hartmann/emotion-english-distilroberta-base",
+                                       preprocessors: list = None, **kwargs) -> list:
+        """
+        set return_all_scores=True for the default model
+        :param preprocessors: list of preprocessors needed for a specific model
+        :param model: model name from Huggingface
+        :return: dict of emotion scores for each sentence in speech
+        """
+        if preprocessors is None:
+            preprocessors = [RemoveExtras(names=True)]
+        preprocessed = self.apply_preprocessors(preprocessors)
+
+        pipe = pipeline("text-classification", model=model, **kwargs)
+        emotion_scores = {}
+
+        for i, sentence in enumerate(Sentensize()(preprocessed)):
+            emotion_scores[i] = pipe(str(sentence), truncation=True)
+
+        emotions_scores_returnable = [
+            {'label': 'anger',
+             'score': np.mean([emotion_score[0][0]["score"] for emotion_score in emotion_scores.values()])},
+            {'label': 'disgust',
+             'score': np.mean([emotion_score[0][1]["score"] for emotion_score in emotion_scores.values()])},
+            {'label': 'fear',
+             'score': np.mean([emotion_score[0][2]["score"] for emotion_score in emotion_scores.values()])},
+            {'label': 'joy',
+             'score': np.mean([emotion_score[0][3]["score"] for emotion_score in emotion_scores.values()])},
+            {'label': 'neutral',
+             'score': np.mean([emotion_score[0][4]["score"] for emotion_score in emotion_scores.values()])},
+            {'label': 'sadness',
+             'score': np.mean([emotion_score[0][5]["score"] for emotion_score in emotion_scores.values()])},
+            {'label': 'surprise',
+             'score': np.mean([emotion_score[0][6]["score"] for emotion_score in emotion_scores.values()])}
+        ]
+
+        return emotions_scores_returnable
+
+
     def get_summary(self, model: str = "facebook/bart-large-cnn", preprocessors=None, max_length: int = 256) -> str:
         """
         :param preprocessors: list of preprocessors needed for a specific model
